@@ -14,7 +14,7 @@ interface QuotesApiService {
 
         fun create(): QuotesApiService {
 
-            val BASE_URL = "http://quotes.rest/"
+            val BASE_URL = "https://quotes.rest/"
 
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
