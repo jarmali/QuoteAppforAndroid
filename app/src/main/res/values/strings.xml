@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Quote App for Android</string>
+    <string name="managementQuoteButton">Management Quote</string>
+    <string name="loveQuoteButton">Love Quote</string>
+    <string name="funnyQuoteButton">Funny Quote</string>
+    <string name="inspiringQuoteButton">Inspiring Quote</string>
+    <string name="topic">Select Quote for Today</string>
+    <string name="textViewForQuote">Click to select</string>
+</resources>
