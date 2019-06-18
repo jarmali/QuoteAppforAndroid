@@ -15,22 +15,22 @@ class MainActivity : AppCompatActivity() {
     viewModel.getQuotes().observe(this, quoteObserver)
 
     managementQuoteButton.setOnClickListener {
-      textView.text = "Loading ..."
+      textView.text = getString(R.string.loading)
       viewModel.getManagementQuote()
     }
 
     inspiringQuoteButton.setOnClickListener {
-      textView.text = "Loading ..."
+      textView.text = getString(R.string.loading)
       viewModel.getInspiringQuote()
     }
 
     loveQuoteButton.setOnClickListener {
-      textView.text = "Loading ..."
+      textView.text = getString(R.string.loading)
       viewModel.getLoveQuote()
     }
 
     funnyQuoteButton.setOnClickListener {
-      textView.text = "Loading ..."
+      textView.text = getString(R.string.loading)
       viewModel.getFunnyQuote()
     }
   }
