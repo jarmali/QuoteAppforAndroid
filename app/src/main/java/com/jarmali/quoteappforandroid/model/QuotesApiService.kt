@@ -7,25 +7,18 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface QuotesApiService {
-    @GET("qod.json")
-    fun getQuote(@Query("category") quoteType: String): Single<QuoteResponse>
+  @GET("qod.json")
+  fun getQuote(@Query("category") quoteType: String): Single<QuoteResponse>
 
-    companion object {
-
-        fun create(): QuotesApiService {
-
-            val BASE_URL = "https://quotes.rest/"
-
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-
-            return retrofit.create(QuotesApiService::class.java)
-
-        }
-
+  companion object {
+    fun create(): QuotesApiService {
+      val BASE_URL = "https://quotes.rest/"
+      val retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+      return retrofit.create(QuotesApiService::class.java)
     }
-
+  }
 }

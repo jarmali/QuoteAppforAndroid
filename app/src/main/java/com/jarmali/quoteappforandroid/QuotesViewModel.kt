@@ -11,68 +11,56 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 
 class QuotesViewModel : ViewModel() {
+  val service by lazy {
+    QuotesApiService.create()
+  }
 
-    val service by lazy {
-        QuotesApiService.create()
-    }
+  private val compositeDisposable = CompositeDisposable()
+  private val quote = MutableLiveData<String>()
 
-    private val compositeDisposable = CompositeDisposable()
-    private val quote = MutableLiveData<String>()
+  fun getQuotes() : LiveData<String> {
+    return quote
+  }
 
-    fun getQuotes() : LiveData<String> {
-        return quote
-    }
+  fun getInspiringQuote() {
+    getQuote("inspire")
+  }
 
-    fun getInspiringQuote() {
+  fun getManagementQuote() {
+    getQuote("management")
+  }
 
-        getQuote("inspire")
+  fun getLoveQuote() {
+    getQuote("love")
+  }
 
-    }
+  fun getFunnyQuote() {
+    getQuote("funny")
+  }
 
-    fun getManagementQuote() {
+  fun getQuote(quoteType: String) {
+    val disposable = service.getQuote(quoteType)
+      .subscribeOn(Schedulers.newThread())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribeWith(object: DisposableSingleObserver<QuoteResponse>() {
+        override fun onSuccess(t: QuoteResponse) {
+          quote.value = t.contents.quotes[0].quote
+        }
 
-        getQuote("management")
+        override fun onError(e: Throwable) {
+          if (e is HttpException && e.code() == 429) {
+            quote.value = "Quotes API is rate limited, try again later."
+          } else {
+            quote.value = e.message
+          }
+        }
+      })
 
-    }
+    compositeDisposable.add(disposable)
+  }
 
-    fun getLoveQuote() {
-
-        getQuote("love")
-
-    }
-
-    fun getFunnyQuote() {
-
-        getQuote("funny")
-
-    }
-
-    fun getQuote(quoteType: String) {
-
-        val disposable = service.getQuote(quoteType)
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object: DisposableSingleObserver<QuoteResponse>() {
-                override fun onSuccess(t: QuoteResponse) {
-                    quote.value = t.contents.quotes[0].quote
-                }
-
-                override fun onError(e: Throwable) {
-                    if (e is HttpException && e.code() == 429) {
-                        quote.value = "Quotes API is rate limited, try again later."
-                    } else {
-                        quote.value = e.message
-                    }
-                }
-            })
-
-        compositeDisposable.add(disposable)
-
-    }
-
-    override fun onCleared() {
-        compositeDisposable.dispose()
-        super.onCleared()
-    }
-
+  override fun onCleared() {
+    compositeDisposable.dispose()
+    super.onCleared()
+  }
 }
