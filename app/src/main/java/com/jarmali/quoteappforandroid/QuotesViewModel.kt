@@ -3,7 +3,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jarmali.quoteappforandroid.model.QuoteResponse
-import com.jarmali.quoteappforandroid.model.QuotesApiService
+import com.jarmali.quoteappforandroid.model.QuotesService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -11,9 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 
 class QuotesViewModel : ViewModel() {
-  val service by lazy {
-    QuotesApiService.create()
-  }
+  private val quotesService = QuotesService()
 
   private val compositeDisposable = CompositeDisposable()
   private val quote = MutableLiveData<String>()
@@ -39,7 +37,7 @@ class QuotesViewModel : ViewModel() {
   }
 
   fun getQuote(quoteType: String) {
-    val disposable = service.getQuote(quoteType)
+    val disposable = quotesService.getQuote(quoteType)
       .subscribeOn(Schedulers.newThread())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribeWith(object: DisposableSingleObserver<QuoteResponse>() {
