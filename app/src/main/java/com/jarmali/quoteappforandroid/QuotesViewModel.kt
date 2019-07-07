@@ -2,6 +2,7 @@ package com.jarmali.quoteappforandroid
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.jarmali.quoteappforandroid.di.DaggerAppComponent
 import com.jarmali.quoteappforandroid.model.QuoteResponse
 import com.jarmali.quoteappforandroid.model.QuotesService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -9,9 +10,15 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
+import javax.inject.Inject
 
 class QuotesViewModel : ViewModel() {
-  private val quotesService = QuotesService()
+  @Inject
+  lateinit var quotesService: QuotesService
+
+  init {
+    DaggerAppComponent.create().inject(this)
+  }
 
   private val compositeDisposable = CompositeDisposable()
   private val quote = MutableLiveData<String>()

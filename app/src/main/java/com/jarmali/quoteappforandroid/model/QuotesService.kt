@@ -1,21 +1,15 @@
 package com.jarmali.quoteappforandroid.model
 
+import com.jarmali.quoteappforandroid.di.DaggerAppComponent
 import io.reactivex.Single
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 class QuotesService {
-  private val BASE_URL = "https://quotes.rest/"
-  private val api : QuotesApi
+  @Inject
+  lateinit var api : QuotesApi
 
   init {
-    api = Retrofit.Builder()
-      .baseUrl(BASE_URL)
-      .addConverterFactory(GsonConverterFactory.create())
-      .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-      .build()
-      .create(QuotesApi::class.java)
+    DaggerAppComponent.create().inject(this)
   }
 
   fun getQuote(quoteType: String): Single<QuoteResponse> {
