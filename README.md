@@ -4,7 +4,7 @@ Example app developed using Model-View-ViewModel (MVVM) design pattern. Technolo
 Kotlin, RxJava2, Retrofit2, Dagger2 and Mockito.<br />
 Quotes are fetched over REST API from https://theysaidso.com/api
 
-![Alt text](./screenshot.png?raw=true "Screenshot")
+![Alt text](https://github.com/jarmali/QuoteAppforAndroid/blob/master/screenshot.jpg?raw=true "Screenshot")
 
 # Installation
 
