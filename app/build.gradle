@@ -25,9 +25,10 @@ android {
 }
 
 def retrofitVersion = '2.5.0'
-def rxJavaVersion = '2.1.1'
+def rxJavaVersion = '2.0.1'
 def daggerVersion = '2.23.2'
 def lifeCycleExtensionsVersion = '2.0.0'
+def mockitoVersion = '2.28.2'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -45,6 +46,8 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifeCycleExtensionsVersion"
     testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    testImplementation "android.arch.core:core-testing:1.1.1"
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

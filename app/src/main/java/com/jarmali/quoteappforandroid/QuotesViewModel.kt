@@ -20,8 +20,8 @@ class QuotesViewModel : ViewModel() {
     DaggerAppComponent.create().inject(this)
   }
 
-  private val compositeDisposable = CompositeDisposable()
-  private val quote = MutableLiveData<String>()
+  val compositeDisposable = CompositeDisposable()
+  val quote = MutableLiveData<String>()
 
   fun getQuotes() : LiveData<String> {
     return quote
